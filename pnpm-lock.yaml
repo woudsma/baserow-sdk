@@ -5,9 +5,15 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@oazapfts/runtime':
+    specifier: ^1.0.1
+    version: 1.0.1
   oazapfts:
     specifier: ^6.0.3
     version: 6.0.3(@oazapfts/runtime@1.0.1)(openapi-types@12.1.3)
+  typescript:
+    specifier: ^5.3.3
+    version: 5.3.3
 
 devDependencies:
   '@typescript-eslint/eslint-plugin':
@@ -22,9 +28,6 @@ devDependencies:
   prettier:
     specifier: ^3.2.5
     version: 3.2.5
-  typescript:
-    specifier: ^5.3.3
-    version: 5.3.3
   vitest:
     specifier: ^1.3.1
     version: 1.3.1
