@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
+  ],
+  "typings": "dist/index.d.ts",
   "scripts": {
     "test": "vitest",
     "prepare": "pnpm generate && tsc",
