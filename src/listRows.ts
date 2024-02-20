@@ -16,7 +16,7 @@ export type ListRowsOptions = {
   [key: string]: unknown;
 };
 
-export async function listRows<T>(
+export async function listRows<T extends Record<string, unknown>>(
   tableId: number,
   options: ListRowsOptions = {},
 ): Promise<T[]> {
@@ -33,5 +33,5 @@ export async function listRows<T>(
     throw new Error(`Failed to list rows: ${result.status}`);
   }
 
-  return result.data.results as T[];
+  return result.data.results as unknown as T[];
 }

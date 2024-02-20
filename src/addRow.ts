@@ -7,12 +7,19 @@ export type AddRowOptions = {
   userFieldNames?: boolean;
 };
 
-export type AddRowReturnType = ReturnType<typeof createDatabaseTableRow>;
-
-export async function addRow(
+export async function addRow<T extends Record<string, unknown>>(
   tableId: number,
   input: Record<string, unknown>,
   options: AddRowOptions = {},
-): AddRowReturnType {
-  return createDatabaseTableRow(tableId, input, options);
+): Promise<T> {
+  const result = await createDatabaseTableRow(tableId, input, options);
+
+  if (result.status !== 200) {
+    console.dir(result.data, {
+      depth: null,
+    });
+    throw new Error(`Failed to add row: ${result.status}`);
+  }
+
+  return result.data as unknown as T;
 }
