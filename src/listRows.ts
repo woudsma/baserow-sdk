@@ -19,7 +19,7 @@ export type ListRowsOptions = {
 export async function listRows<T>(
   tableId: number,
   options: ListRowsOptions = {},
-) {
+): Promise<T[]> {
   const result = await listDatabaseTableRows(tableId, {
     userFieldNames: true,
     ...options,
