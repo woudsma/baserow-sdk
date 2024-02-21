@@ -1,4 +1,5 @@
 import { listDatabaseTableRows } from "./__generated__/baserow";
+import { makeAction } from "./makeAction";
 
 export type ListRowsOptions = {
   exclude?: string;
@@ -16,22 +17,11 @@ export type ListRowsOptions = {
   [key: string]: unknown;
 };
 
-export async function listRows<T extends Record<string, unknown>>(
-  tableId: number,
-  options: ListRowsOptions = {},
-): Promise<T[]> {
-  const result = await listDatabaseTableRows(tableId, {
-    userFieldNames: true,
-    ...options,
-    filters: JSON.stringify(options.filters),
-  });
-
-  if (result.status !== 200) {
-    console.dir(result.data, {
-      depth: null,
-    });
-    throw new Error(`Failed to list rows: ${result.status}`);
-  }
-
-  return result.data.results as unknown as T[];
-}
+export const listRows = makeAction({
+  fn: (tableId: number, options: ListRowsOptions = {}) =>
+    listDatabaseTableRows(tableId, {
+      userFieldNames: true,
+      ...options,
+      filters: JSON.stringify(options.filters),
+    }),
+});
