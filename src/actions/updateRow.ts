@@ -1,5 +1,6 @@
 import { updateDatabaseTableRow } from "../__generated__/baserow";
 import { config } from "../configStore";
+import { limit } from "../limit";
 
 export type UpdateRowOptions = {
   clientSessionId?: string;
@@ -13,12 +14,8 @@ export async function updateRow<T>(
   input: Record<string, unknown>,
   options: UpdateRowOptions = {},
 ): Promise<T> {
-  const { status, data } = await updateDatabaseTableRow(
-    tableId,
-    rowId,
-    input,
-    options,
-    config,
+  const { status, data } = await limit(() =>
+    updateDatabaseTableRow(tableId, rowId, input, options, config),
   );
 
   if (status !== 200) {

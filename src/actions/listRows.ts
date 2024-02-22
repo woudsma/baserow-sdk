@@ -1,5 +1,6 @@
 import { listDatabaseTableRows } from "../__generated__/baserow";
 import { config } from "../configStore";
+import { limit } from "../limit";
 
 export type ListRowsOptions = {
   exclude?: string;
@@ -21,14 +22,16 @@ export async function listRows<T>(
   tableId: number,
   options: ListRowsOptions = {},
 ): Promise<T[]> {
-  const { status, data } = await listDatabaseTableRows(
-    tableId,
-    {
-      userFieldNames: true,
-      ...options,
-      filters: JSON.stringify(options.filters),
-    },
-    config,
+  const { status, data } = await limit(() =>
+    listDatabaseTableRows(
+      tableId,
+      {
+        userFieldNames: true,
+        ...options,
+        filters: JSON.stringify(options.filters),
+      },
+      config,
+    ),
   );
 
   if (status !== 200) {

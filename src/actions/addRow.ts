@@ -1,5 +1,6 @@
 import { createDatabaseTableRow } from "../__generated__/baserow";
 import { config } from "../configStore";
+import { limit } from "../limit";
 
 export type AddRowOptions = {
   clientSessionId?: string;
@@ -13,11 +14,8 @@ export async function addRow<T>(
   input: Record<string, unknown>,
   options: AddRowOptions = {},
 ): Promise<T> {
-  const { status, data } = await createDatabaseTableRow(
-    tableId,
-    input,
-    options,
-    config,
+  const { status, data } = await limit(() =>
+    createDatabaseTableRow(tableId, input, options, config),
   );
 
   if (status !== 200) {
