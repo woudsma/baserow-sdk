@@ -1,5 +1,5 @@
-import { RequestOpts } from "@oazapfts/runtime";
 import { createDatabaseTableRow } from "../__generated__/baserow";
+import { config } from "../configStore";
 
 export type AddRowOptions = {
   clientSessionId?: string;
@@ -9,7 +9,6 @@ export type AddRowOptions = {
 };
 
 export async function addRow<T>(
-  config: RequestOpts,
   tableId: number,
   input: Record<string, unknown>,
   options: AddRowOptions = {},

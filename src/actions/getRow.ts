@@ -1,12 +1,11 @@
-import { RequestOpts } from "@oazapfts/runtime";
 import { getDatabaseTableRow } from "../__generated__/baserow";
+import { config } from "../configStore";
 
 export type GetRowOptions = {
   userFieldNames?: boolean;
 };
 
 export async function getRow<T>(
-  config: RequestOpts,
   rowId: number,
   tableId: number,
   options: GetRowOptions = {},

@@ -1,5 +1,5 @@
-import { RequestOpts } from "@oazapfts/runtime";
 import { updateDatabaseTableRow } from "../__generated__/baserow";
+import { config } from "../configStore";
 
 export type UpdateRowOptions = {
   clientSessionId?: string;
@@ -8,7 +8,6 @@ export type UpdateRowOptions = {
 };
 
 export async function updateRow<T>(
-  config: RequestOpts,
   tableId: number,
   rowId: number,
   input: Record<string, unknown>,
