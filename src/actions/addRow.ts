@@ -1,5 +1,5 @@
 import { createDatabaseTableRow } from "../__generated__/baserow";
-import { config } from "../configStore";
+import { getConfig } from "../configStore";
 import { limit } from "../limit";
 
 export type AddRowOptions = {
@@ -15,7 +15,7 @@ export async function addRow<T>(
   options: AddRowOptions = {},
 ): Promise<T> {
   const { status, data } = await limit(() =>
-    createDatabaseTableRow(tableId, input, options, config),
+    createDatabaseTableRow(tableId, input, options, getConfig()),
   );
 
   if (status !== 200) {

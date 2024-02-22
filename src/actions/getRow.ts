@@ -1,5 +1,5 @@
 import { getDatabaseTableRow } from "../__generated__/baserow";
-import { config } from "../configStore";
+import { getConfig } from "../configStore";
 import { limit } from "../limit";
 
 export type GetRowOptions = {
@@ -12,7 +12,7 @@ export async function getRow<T>(
   options: GetRowOptions = {},
 ): Promise<T> {
   const { status, data } = await limit(() =>
-    getDatabaseTableRow(rowId, tableId, options, config),
+    getDatabaseTableRow(rowId, tableId, options, getConfig()),
   );
 
   if (status !== 200) {

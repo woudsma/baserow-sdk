@@ -1,5 +1,5 @@
 import { listDatabaseTableRows } from "../__generated__/baserow";
-import { config } from "../configStore";
+import { getConfig } from "../configStore";
 import { limit } from "../limit";
 
 export type ListRowsOptions = {
@@ -30,7 +30,7 @@ export async function listRows<T>(
         ...options,
         filters: JSON.stringify(options.filters),
       },
-      config,
+      getConfig(),
     ),
   );
 
