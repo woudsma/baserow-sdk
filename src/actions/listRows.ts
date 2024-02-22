@@ -1,6 +1,5 @@
-import { RequestOpts } from "@oazapfts/runtime";
 import { listDatabaseTableRows } from "../__generated__/baserow";
-import { makeAction } from "../makeAction";
+import { config } from "../configStore";
 
 export type ListRowsOptions = {
   exclude?: string;
@@ -18,15 +17,26 @@ export type ListRowsOptions = {
   [key: string]: unknown;
 };
 
-export const listRows = makeAction({
-  fn: (config: RequestOpts, tableId: number, options: ListRowsOptions = {}) =>
-    listDatabaseTableRows(
-      tableId,
-      {
-        userFieldNames: true,
-        ...options,
-        filters: JSON.stringify(options.filters),
-      },
-      config,
-    ),
-});
+export async function listRows<T>(
+  tableId: number,
+  options: ListRowsOptions = {},
+): Promise<T[]> {
+  const { status, data } = await listDatabaseTableRows(
+    tableId,
+    {
+      userFieldNames: true,
+      ...options,
+      filters: JSON.stringify(options.filters),
+    },
+    config,
+  );
+
+  if (status !== 200) {
+    console.dir(data, {
+      depth: null,
+    });
+    throw new Error(`Failed to execute action: ${status}`);
+  }
+
+  return data.results as T[];
+}

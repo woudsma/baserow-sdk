@@ -3,7 +3,7 @@ import { listRows } from "./listRows";
 import { listDatabaseTableRows } from "../__generated__/baserow";
 import { configure } from "../configure";
 
-vi.mock("./__generated__/baserow");
+vi.mock("../__generated__/baserow");
 
 describe("listRows", () => {
   beforeEach(() => {

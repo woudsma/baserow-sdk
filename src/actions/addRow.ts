@@ -1,6 +1,5 @@
 import { RequestOpts } from "@oazapfts/runtime";
 import { createDatabaseTableRow } from "../__generated__/baserow";
-import { makeAction } from "../makeAction";
 
 export type AddRowOptions = {
   clientSessionId?: string;
@@ -9,11 +8,25 @@ export type AddRowOptions = {
   userFieldNames?: boolean;
 };
 
-export const addRow = makeAction({
-  fn: (
-    config: RequestOpts,
-    tableId: number,
-    input: Record<string, unknown>,
-    options: AddRowOptions = {},
-  ) => createDatabaseTableRow(tableId, input, options, config),
-});
+export async function addRow<T>(
+  config: RequestOpts,
+  tableId: number,
+  input: Record<string, unknown>,
+  options: AddRowOptions = {},
+): Promise<T> {
+  const { status, data } = await createDatabaseTableRow(
+    tableId,
+    input,
+    options,
+    config,
+  );
+
+  if (status !== 200) {
+    console.dir(data, {
+      depth: null,
+    });
+    throw new Error(`Failed to execute action: ${status}`);
+  }
+
+  return data as T;
+}
