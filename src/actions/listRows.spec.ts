@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { listRows } from "./listRows";
-import { listDatabaseTableRows } from "./__generated__/baserow";
-import { configure } from "./configure";
+import { listDatabaseTableRows } from "../__generated__/baserow";
+import { configure } from "../configure";
 
 vi.mock("./__generated__/baserow");
 

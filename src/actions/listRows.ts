@@ -1,6 +1,6 @@
 import { RequestOpts } from "@oazapfts/runtime";
-import { listDatabaseTableRows } from "./__generated__/baserow";
-import { makeAction } from "./makeAction";
+import { listDatabaseTableRows } from "../__generated__/baserow";
+import { makeAction } from "../makeAction";
 
 export type ListRowsOptions = {
   exclude?: string;

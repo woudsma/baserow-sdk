@@ -1,6 +1,6 @@
 import { RequestOpts } from "@oazapfts/runtime";
-import { createDatabaseTableRow } from "./__generated__/baserow";
-import { makeAction } from "./makeAction";
+import { createDatabaseTableRow } from "../__generated__/baserow";
+import { makeAction } from "../makeAction";
 
 export type AddRowOptions = {
   clientSessionId?: string;

@@ -1,6 +1,6 @@
 import { RequestOpts } from "@oazapfts/runtime";
-import { getDatabaseTableRow } from "./__generated__/baserow";
-import { makeAction } from "./makeAction";
+import { getDatabaseTableRow } from "../__generated__/baserow";
+import { makeAction } from "../makeAction";
 
 export type GetRowOptions = {
   userFieldNames?: boolean;
