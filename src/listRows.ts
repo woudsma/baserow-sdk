@@ -1,3 +1,4 @@
+import { RequestOpts } from "@oazapfts/runtime";
 import { listDatabaseTableRows } from "./__generated__/baserow";
 import { makeAction } from "./makeAction";
 
@@ -18,10 +19,14 @@ export type ListRowsOptions = {
 };
 
 export const listRows = makeAction({
-  fn: (tableId: number, options: ListRowsOptions = {}) =>
-    listDatabaseTableRows(tableId, {
-      userFieldNames: true,
-      ...options,
-      filters: JSON.stringify(options.filters),
-    }),
+  fn: (config: RequestOpts, tableId: number, options: ListRowsOptions = {}) =>
+    listDatabaseTableRows(
+      tableId,
+      {
+        userFieldNames: true,
+        ...options,
+        filters: JSON.stringify(options.filters),
+      },
+      config,
+    ),
 });
