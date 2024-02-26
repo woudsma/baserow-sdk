@@ -13,10 +13,6 @@ describe("listRows", () => {
     } as any);
   });
 
-  it("runs", async () => {
-    await listRows(1);
-  });
-
   it("passes config explicitly", async () => {
     configure({
       baseUrl: "https://example.com",
