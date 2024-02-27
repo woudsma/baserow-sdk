@@ -10,3 +10,25 @@ jobs:
       - uses: pnpm/action-setup@v3
       - run: pnpm install
       - run: pnpm run test
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v3
+      - run: pnpm install
+      - run: pnpm run lint
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - run: npx prettier --check .
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v3
+      - run: pnpm install
+      - run: pnpm run prepare
