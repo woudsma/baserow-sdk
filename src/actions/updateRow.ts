@@ -15,7 +15,7 @@ export async function updateRow<T>(
   options: UpdateRowOptions = {},
 ): Promise<T> {
   const { status, data } = await limit(() =>
-    updateDatabaseTableRow(tableId, rowId, input, options, getConfig()),
+    updateDatabaseTableRow(rowId, tableId, input, options, getConfig()),
   );
 
   if (status !== 200) {
