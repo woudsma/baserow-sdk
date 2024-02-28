@@ -1,34 +1,17 @@
-import axios, { InternalAxiosRequestConfig } from "axios";
-
-const DEFAULT_PARAMS = {
-  user_field_names: true,
-};
-
-const MAX_REQUESTS_COUNT = 1;
-const INTERVAL_MS = 10;
+import axios from "axios";
+import { Interceptors } from "./interceptors.js";
 
 const client = axios.create();
 
 client.defaults.baseURL = "https://baserow.taskratchet.com/api/";
 client.defaults.headers.common["Content-Type"] = "application/json";
 
-let pendingRequests = 0;
+const interceptors = new Interceptors();
 
-client.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  config.params = {
-    ...DEFAULT_PARAMS,
-    ...(config.params as Record<string, unknown>),
-  };
-
-  return new Promise((resolve) => {
-    const interval = setInterval(() => {
-      if (pendingRequests < MAX_REQUESTS_COUNT) {
-        pendingRequests++;
-        clearInterval(interval);
-        resolve(config);
-      }
-    }, INTERVAL_MS);
-  });
-});
+client.interceptors.request.use((c) => interceptors.onRequest(c));
+client.interceptors.response.use(
+  (r) => interceptors.onResponse(r),
+  (e) => interceptors.onError(e),
+);
 
 export default client;
