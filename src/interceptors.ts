@@ -18,6 +18,12 @@ export class Interceptors {
       ...(config.params as Record<string, unknown>),
     };
 
+    const params = config.params as { filters?: unknown };
+
+    if (params.filters !== undefined) {
+      params.filters = JSON.stringify(params.filters);
+    }
+
     return new Promise((resolve) => {
       const interval = setInterval(() => {
         if (this.pending < MAX_REQUESTS_COUNT) {
