@@ -37,4 +37,14 @@ describe("Request Interceptor", () => {
 
     await Promise.all(promises);
   });
+
+  it("stringifys the filters", async () => {
+    const config = await interceptors.onRequest({
+      params: { filters: { id: 1 } },
+    } as any);
+
+    expect(config.params).toEqual(
+      expect.objectContaining({ filters: '{"id":1}' }),
+    );
+  });
 });
