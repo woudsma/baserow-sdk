@@ -23,6 +23,13 @@ export type ListRowsOptions = {
   [key: string]: unknown;
 };
 
+export type ListRowsResponse<T> = {
+  count: number;
+  next: null | string;
+  previous: null | string;
+  results: T[];
+};
+
 export type UpdateRowOptions = {
   user_field_names?: boolean;
 };
@@ -60,10 +67,13 @@ export class BaserowSdk {
   public async listRows<T extends Record<string, unknown>>(
     tableId: number,
     options: ListRowsOptions = {},
-  ): Promise<T[]> {
-    const { data } = await c.get<T[]>(`/database/rows/table/${tableId}/`, {
-      params: options,
-    });
+  ): Promise<ListRowsResponse<T>> {
+    const { data } = await c.get<ListRowsResponse<T>>(
+      `/database/rows/table/${tableId}/`,
+      {
+        params: options,
+      },
+    );
     return data;
   }
 
