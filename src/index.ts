@@ -39,11 +39,12 @@ export class BaserowSdk {
     c.defaults.headers.common["Authorization"] = `Token ${databaseToken}`;
   }
 
-  public async addRow<
-    T extends Record<string, unknown>,
-    R extends Record<string, unknown>,
-  >(tableId: number, input: T, options: AddRowOptions = {}): Promise<R> {
-    const { data } = await c.post<R>(
+  public async addRow<T extends Record<string, unknown>>(
+    tableId: number,
+    input: T,
+    options: AddRowOptions = {},
+  ): Promise<T> {
+    const { data } = await c.post<T>(
       `/database/rows/table/${tableId}/`,
       input,
       { params: options },
@@ -76,16 +77,13 @@ export class BaserowSdk {
     return data;
   }
 
-  public async updateRow<
-    T extends Record<string, unknown>,
-    R extends Record<string, unknown>,
-  >(
+  public async updateRow<T extends Record<string, unknown>>(
     tableId: number,
     rowId: number,
     input: T,
     options: UpdateRowOptions = {},
-  ): Promise<R> {
-    const { data } = await c.patch<R>(
+  ): Promise<T> {
+    const { data } = await c.patch<T>(
       `/database/rows/table/${tableId}/${rowId}/`,
       input,
       { params: options },
