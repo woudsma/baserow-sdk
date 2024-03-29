@@ -92,4 +92,8 @@ export class BaserowSdk {
     );
     return data;
   }
+
+  public async deleteRow(tableId: number, rowId: number): Promise<void> {
+    await c.delete(`/database/rows/table/${tableId}/${rowId}/`);
+  }
 }
