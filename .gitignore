@@ -2,3 +2,4 @@ dist/
 node_modules
 scripts/
 .baserowrc
+__generated__/

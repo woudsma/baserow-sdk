@@ -16,6 +16,8 @@
     "dist",
     "**/*.spec.ts",
     "vitest.config.ts",
-    "vitest.setup.ts"
+    "vitest.setup.ts",
+    ".baserowrc",
+    "__generated__"
   ]
 }

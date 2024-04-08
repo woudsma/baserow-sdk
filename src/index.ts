@@ -34,7 +34,7 @@ export type UpdateRowOptions = {
   user_field_names?: boolean;
 };
 
-export type ListFieldsResponse = Array<{
+export type FieldDefinition = {
   id: number;
   table_id: number;
   name: string;
@@ -42,7 +42,11 @@ export type ListFieldsResponse = Array<{
   type: string;
   primary: boolean;
   read_only: boolean;
-}>;
+  array_formula_type?: string;
+  formula_type?: string;
+};
+
+export type ListFieldsResponse = Array<FieldDefinition>;
 
 export type ListDatabaseTablesResponse = Array<{
   id: number;
@@ -113,15 +117,6 @@ export class BaserowSdk {
   public async listFields(tableId: number): Promise<ListFieldsResponse> {
     const { data } = await c.get<ListFieldsResponse>(
       `/database/fields/table/${tableId}/`,
-    );
-    return data;
-  }
-
-  public async listDatabaseTables(
-    databaseId: number,
-  ): Promise<ListDatabaseTablesResponse> {
-    const { data } = await c.get<ListDatabaseTablesResponse>(
-      `/database/tables/database/${databaseId}/`,
     );
     return data;
   }
