@@ -3,6 +3,7 @@ import { BaserowSdk } from "./index.js";
 import z from "zod";
 import fs from "fs";
 import makeType from "./codegen/makeType.js";
+import makeClassMethods from "./codegen/makeClassMethods.js";
 
 export default async function main(): Promise<void> {
   const raw = rc("baserow");
@@ -34,7 +35,14 @@ export default async function main(): Promise<void> {
       console.log(tableId);
       console.log(fields);
 
-      const typeDef = `export type ${tableName}Row = ${makeType(fields)}`;
+      //TODO: this may not be correct for all generated files
+      const typeDef = `export type ${tableName}RowType = ${makeType(fields)}
+
+import { Base } from "../src/base.ts";
+
+export class ${tableName}Row extends Base<${tableName}RowType> {
+  ${makeClassMethods(fields)}
+}`;
 
       fs.writeFileSync(`./__generated__/${tableName}.ts`, typeDef);
     }),

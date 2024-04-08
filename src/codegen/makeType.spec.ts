@@ -1,19 +1,6 @@
 import { describe, it, expect } from "vitest";
 import makeType from "./makeType";
-import { FieldDefinition } from "../index.ts";
-
-function f(field: Partial<FieldDefinition>): FieldDefinition {
-  return {
-    id: 1,
-    name: "the_field_name",
-    type: "text",
-    table_id: 1,
-    order: 1,
-    primary: false,
-    read_only: false,
-    ...field,
-  };
-}
+import f from "../test/fixtures/fieldDefinition";
 
 describe("makeType", () => {
   it("returns string for type text", () => {
@@ -256,5 +243,13 @@ describe("makeType", () => {
         }),
       ]),
     ).toContain("string");
+  });
+
+  it("includes id", () => {
+    expect(makeType([])).toContain("id");
+  });
+
+  it("includes order", () => {
+    expect(makeType([])).toContain("order");
   });
 });
