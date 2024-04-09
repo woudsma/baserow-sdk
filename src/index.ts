@@ -44,6 +44,7 @@ export type FieldDefinition = {
   read_only: boolean;
   array_formula_type?: string;
   formula_type?: string;
+  link_row_table_id?: number;
 };
 
 export type ListFieldsResponse = Array<FieldDefinition>;

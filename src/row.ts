@@ -1,8 +1,8 @@
 import { BaserowSdk } from "./index.js";
 
-export type Row = Record<string, unknown> & { id: number; order: string };
+export type RowType = Record<string, unknown> & { id: number; order: string };
 
-export abstract class Base<T extends Row> {
+export abstract class Row<T extends RowType> {
   protected tableId: number;
   protected rowId: number;
   protected row: T;
@@ -42,7 +42,7 @@ export abstract class Base<T extends Row> {
   }
 
   protected async setField(field: string, value: unknown): Promise<void> {
-    (this.row as Row)[field] = value;
+    (this.row as RowType)[field] = value;
     await this.sdk.updateRow(this.tableId, this.rowId, {
       [field]: value,
     });

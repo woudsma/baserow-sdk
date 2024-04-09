@@ -1,15 +1,20 @@
 import { describe, it, expect } from "vitest";
 import makeClassMethods from "./makeClassMethods";
 import f from "../test/fixtures/fieldDefinition";
+import { ListFieldsResponse } from "../index.js";
+
+function run(fields: ListFieldsResponse = []): string {
+  return makeClassMethods(1, [{ id: 1, name: "the_table_name", fields }]);
+}
 
 describe("makeClassMethods", () => {
   it("returns empty string for empty fields", () => {
-    expect(makeClassMethods([])).toBe("");
+    expect(run()).toBe("");
   });
 
   it("returns string for single field", () => {
     expect(
-      makeClassMethods([
+      run([
         f({
           name: "the_field_name",
         }),
@@ -19,7 +24,7 @@ describe("makeClassMethods", () => {
 
   it("returns string for multiple fields", () => {
     expect(
-      makeClassMethods([
+      run([
         f({
           name: "the_field_name",
         }),
@@ -32,7 +37,7 @@ describe("makeClassMethods", () => {
 
   it("handles field names with spaces", () => {
     expect(
-      makeClassMethods([
+      run([
         f({
           name: "the field name",
         }),
@@ -42,7 +47,7 @@ describe("makeClassMethods", () => {
 
   it("handles field names with spaces in setter", () => {
     expect(
-      makeClassMethods([
+      run([
         f({
           name: "the field name",
         }),
@@ -52,7 +57,7 @@ describe("makeClassMethods", () => {
 
   it("sets return type", () => {
     expect(
-      makeClassMethods([
+      run([
         f({
           name: "the_field_name",
           type: "text",
@@ -63,7 +68,7 @@ describe("makeClassMethods", () => {
 
   it("uses mapped type for value arg", () => {
     expect(
-      makeClassMethods([
+      run([
         f({
           name: "the_field_name",
           type: "text",
@@ -74,7 +79,7 @@ describe("makeClassMethods", () => {
 
   it("uses mapped type for getField generic", () => {
     expect(
-      makeClassMethods([
+      run([
         f({
           name: "the_field_name",
           type: "text",
@@ -85,7 +90,7 @@ describe("makeClassMethods", () => {
 
   it("handles emoji field name", () => {
     expect(
-      makeClassMethods([
+      run([
         f({
           name: "🔥",
         }),
@@ -95,7 +100,7 @@ describe("makeClassMethods", () => {
 
   it("handles lookup types", () => {
     expect(
-      makeClassMethods([
+      run([
         f({
           name: "the_field_name",
           type: "lookup",
@@ -107,7 +112,7 @@ describe("makeClassMethods", () => {
 
   it("parses numbers", () => {
     expect(
-      makeClassMethods([
+      run([
         f({
           name: "the_field_name",
           type: "number",
@@ -118,7 +123,7 @@ describe("makeClassMethods", () => {
 
   it("does not create setter for read-only field", () => {
     expect(
-      makeClassMethods([
+      run([
         f({
           name: "the_field_name",
           read_only: true,
@@ -129,12 +134,40 @@ describe("makeClassMethods", () => {
 
   it("accepts id array for link_row setters", () => {
     expect(
-      makeClassMethods([
-        f({
-          name: "the_field_name",
-          type: "link_row",
-        }),
+      makeClassMethods(1, [
+        {
+          id: 1,
+          name: "the_table_name",
+          fields: [f({ type: "link_row", link_row_table_id: 2 })],
+        },
+        { id: 2, name: "the_foreign_table_name", fields: [] },
       ]),
     ).toContain("value: number[]");
+  });
+
+  it("uses repository to get linked row objects", () => {
+    expect(
+      makeClassMethods(1, [
+        {
+          id: 1,
+          name: "the_table_name",
+          fields: [f({ type: "link_row", link_row_table_id: 2 })],
+        },
+        { id: 2, name: "the_foreign_table_name", fields: [] },
+      ]),
+    ).toContain("this.repository.getOneTheForeignTableName");
+  });
+
+  it("properly set link row getter return type", () => {
+    expect(
+      makeClassMethods(1, [
+        {
+          id: 1,
+          name: "the_table_name",
+          fields: [f({ type: "link_row", link_row_table_id: 2 })],
+        },
+        { id: 2, name: "the_foreign_table_name", fields: [] },
+      ]),
+    ).toContain("TheForeignTableNameRow[]");
   });
 });
