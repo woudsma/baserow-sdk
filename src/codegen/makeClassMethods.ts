@@ -29,19 +29,23 @@ function makeGetter(field: FieldDefinition): string {
     }`;
 }
 
+function makeSetter(field: FieldDefinition): string {
+  return `public ${toCamelCase(`set ${field.name}`)}(value: ${makeFieldType(
+    field,
+  )}): Promise<void> {
+        return this.setField("${field.name}", value);
+    }`;
+}
+
 export default function makeClassMethods(fields: ListFieldsResponse): string {
-  let classMethods = "";
+  const methods: string[] = [];
 
   fields.forEach((field) => {
-    const t = makeFieldType(field);
-    classMethods += `
-    ${makeGetter(field)}
-
-    public ${toCamelCase(`set ${field.name}`)}(value: ${t}): Promise<void> {
-        return this.setField("${field.name}", value);
+    methods.push(makeGetter(field));
+    if (!field.read_only) {
+      methods.push(makeSetter(field));
     }
-    `;
   });
 
-  return classMethods;
+  return methods.join("\n");
 }

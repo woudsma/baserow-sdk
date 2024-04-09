@@ -115,4 +115,15 @@ describe("makeClassMethods", () => {
       ]),
     ).toContain("parseFloat");
   });
+
+  it("does not create setter for read-only field", () => {
+    expect(
+      makeClassMethods([
+        f({
+          name: "the_field_name",
+          read_only: true,
+        }),
+      ]),
+    ).not.toContain("setTheFieldName");
+  });
 });
