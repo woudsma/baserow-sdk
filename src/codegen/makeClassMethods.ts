@@ -30,6 +30,12 @@ function makeGetter(field: FieldDefinition): string {
 }
 
 function makeSetter(field: FieldDefinition): string {
+  if (field.type === "link_row") {
+    return `public ${toCamelCase(`set ${field.name}`)}(value: number[]): Promise<void> {
+        return this.setField("${field.name}", value);
+    }`;
+  }
+
   return `public ${toCamelCase(`set ${field.name}`)}(value: ${makeFieldType(
     field,
   )}): Promise<void> {

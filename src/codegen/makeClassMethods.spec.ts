@@ -126,4 +126,15 @@ describe("makeClassMethods", () => {
       ]),
     ).not.toContain("setTheFieldName");
   });
+
+  it("accepts id array for link_row setters", () => {
+    expect(
+      makeClassMethods([
+        f({
+          name: "the_field_name",
+          type: "link_row",
+        }),
+      ]),
+    ).toContain("value: number[]");
+  });
 });
