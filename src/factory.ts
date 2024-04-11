@@ -2,25 +2,30 @@ import { BaserowConfig, getConfig } from "./getConfig.js";
 import { BaserowSdk } from "./index.js";
 import { Row, RowOptions, RowType } from "./row.js";
 
-interface RowClass {
-  new (options: RowOptions<RowType>): Row<RowType>;
+interface RowClass<T extends RowType> {
+  new (options: RowOptions<T>): Row<T>;
 }
 
 export abstract class Factory {
   protected sdk: BaserowSdk;
   protected config: BaserowConfig;
-  protected classes: Map<number, RowClass> = new Map();
+  protected classes: Map<number, RowClass<RowType>> = new Map();
 
   constructor() {
     this.config = getConfig();
     this.sdk = new BaserowSdk(this.config.databaseToken);
   }
 
-  protected registerRowClass(tableId: number, rowClass: RowClass): void {
-    this.classes.set(tableId, rowClass);
+  protected registerRowClass<T extends RowType>(
+    tableId: number,
+    rowClass: RowClass<T>,
+  ): void {
+    this.classes.set(tableId, rowClass as RowClass<RowType>);
   }
 
-  protected getRowClass(tableId: number): RowClass | undefined {
-    return this.classes.get(tableId);
+  protected getRowClass<T extends RowType>(
+    tableId: number,
+  ): RowClass<T> | undefined {
+    return this.classes.get(tableId) as RowClass<T> | undefined;
   }
 }
