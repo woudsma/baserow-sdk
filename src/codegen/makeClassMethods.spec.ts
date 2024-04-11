@@ -170,4 +170,27 @@ describe("makeClassMethods", () => {
       ]),
     ).toContain("TheForeignTableNameRow[]");
   });
+
+  it("returns Date object for date fields", () => {
+    expect(
+      run([
+        f({
+          name: "the_field_name",
+          type: "date",
+        }),
+      ]),
+    ).toContain("Date");
+  });
+
+  it("returns Date object for date rollups", () => {
+    expect(
+      run([
+        f({
+          name: "the_field_name",
+          type: "rollup",
+          formula_type: "date",
+        }),
+      ]),
+    ).toContain("Date");
+  });
 });
