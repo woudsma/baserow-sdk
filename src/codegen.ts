@@ -1,24 +1,14 @@
-import rc from "rc";
 import { BaserowSdk } from "./index.js";
-import z from "zod";
 import fs from "fs";
 import makeType from "./codegen/makeType.js";
 import makeClassMethods from "./codegen/makeClassMethods.js";
 import path from "path";
+import { getConfig } from "./getConfig.js";
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 export default async function main(): Promise<void> {
-  const raw = rc("baserow");
-  const config = z
-    .object({
-      url: z.string(),
-      tables: z.record(z.string(), z.number()),
-      databaseToken: z.string(),
-      outDir: z.string(),
-      config: z.string(),
-    })
-    .parse(raw);
+  const config = getConfig();
 
   console.dir(config);
 
