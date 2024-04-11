@@ -6,6 +6,8 @@ import makeType from "./codegen/makeType.js";
 import makeClassMethods from "./codegen/makeClassMethods.js";
 import path from "path";
 
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
 export default async function main(): Promise<void> {
   const raw = rc("baserow");
   const config = z
@@ -53,9 +55,9 @@ export default async function main(): Promise<void> {
     //TODO: this may not be correct for all generated files
     const typeDef = `export type ${tableName}RowType = ${makeType(fields)}
 
-import { Row } from "../src/row.ts";
+import { Row } from "${__dirname}/row.ts";
 import { Repository } from "./Repository.ts";
-import { BaserowSdk } from "../src/index.ts";
+import { BaserowSdk } from "${__dirname}/index.ts";
 ${foreignTables
   .map((t) => {
     return `import { ${t?.name}Row } from "./${t?.name}.ts";`;
@@ -80,8 +82,8 @@ export class ${tableName}Row extends Row<${tableName}RowType> {
     fs.writeFileSync(`${outDir}/${tableName}.ts`, typeDef);
   });
 
-  const factoryCode = `import { Factory } from '../src/factory.ts'
-import { ListRowsOptions, GetRowOptions } from '../src/index.ts'
+  const factoryCode = `import { Factory } from '${__dirname}/factory.ts'
+import { ListRowsOptions, GetRowOptions } from '${__dirname}/index.ts'
 ${Object.keys(config.tables)
   .map(
     (tableName) =>
