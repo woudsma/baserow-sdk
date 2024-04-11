@@ -14,12 +14,14 @@ export abstract class Row<T extends RowType> {
   protected rowId: number;
   protected row: T;
   protected sdk: BaserowSdk;
+  protected repository: Factory;
 
-  constructor({ tableId, rowId, row, sdk }: RowOptions<T>) {
+  constructor({ tableId, rowId, row, sdk, repository }: RowOptions<T>) {
     this.tableId = tableId;
     this.rowId = rowId;
     this.row = row;
     this.sdk = sdk;
+    this.repository = repository;
   }
 
   public getRow(): T {
