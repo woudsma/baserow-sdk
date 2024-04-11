@@ -3,3 +3,4 @@ node_modules
 scripts/
 .baserowrc
 __generated__/
+out.txt

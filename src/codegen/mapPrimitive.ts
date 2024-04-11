@@ -6,8 +6,6 @@ export function mapPrimitive(baserowPrimitive: string | undefined): string {
       return "string";
     case "number":
       return "number | string";
-    case "single_select":
-      return "boolean";
     case "long_text":
       return "string";
     case "boolean":

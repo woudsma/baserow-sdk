@@ -45,6 +45,7 @@ export type FieldDefinition = {
   array_formula_type?: string;
   formula_type?: string;
   link_row_table_id?: number;
+  select_options?: { id: number; value: string; color: string }[];
 };
 
 export type ListFieldsResponse = Array<FieldDefinition>;

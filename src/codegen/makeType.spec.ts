@@ -23,16 +23,6 @@ describe("makeType", () => {
     ).toContain("number | string");
   });
 
-  it("returns bool for type single select", () => {
-    expect(
-      makeType([
-        f({
-          type: "single_select",
-        }),
-      ]),
-    ).toContain("boolean");
-  });
-
   it("returns string for type long text", () => {
     expect(
       makeType([
