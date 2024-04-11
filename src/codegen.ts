@@ -56,7 +56,7 @@ ${foreignTables
   })
   .join("\n")}
 
-export class ${tableName}Row extends Row<${tableName}RowType> {
+export class ${tableName}Row extends Row<${tableName}RowType, Repository> {
   protected repository: Repository;
   constructor(options: {
     tableId: number;
