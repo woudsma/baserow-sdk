@@ -15,7 +15,7 @@
   "typings": "dist/src/index.d.ts",
   "scripts": {
     "test": "vitest",
-    "prepare": "tsc",
+    "prepare": "pnpm build",
     "build": "rm -rf ./dist && tsc",
     "lint": "eslint .",
     "format": "prettier --write .",
