@@ -79,9 +79,7 @@ function getBody(field: FieldDefinition, tables: Table[]): string {
 
   if (field.type === "link_row") {
     const foreignTable = getForeignTable(field, tables);
-    return `return Promise.all(${query}.map((r) => {
-      return this.repository.${toCamelCase(`get one ${foreignTable.name}`)}(r.id);
-    }));`;
+    return `return Promise.all(${query}.map((r) => this.repository.${toCamelCase(`get one ${foreignTable.name}`)}(r.id)));`;
   }
 
   if (field.type === "date" || field.formula_type === "date") {
@@ -99,5 +97,5 @@ export function makeGetter(
   const rt = getReturnType(field, tables);
   const bd = getBody(field, tables);
 
-  return `\tpublic ${fn}(): ${rt} { ${bd} }`;
+  return `\n  public ${fn}(): ${rt} {\n    ${bd}\n  }`;
 }

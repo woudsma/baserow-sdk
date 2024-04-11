@@ -67,7 +67,7 @@ export class ${tableName}Row extends Row<${tableName}RowType> {
     super(options);
     this.repository = options.repository;
   }
-  ${makeClassMethods(table.id, tables)}
+${makeClassMethods(table.id, tables)}
 }`;
 
     fs.writeFileSync(`${outDir}/${tableName}.ts`, typeDef);
