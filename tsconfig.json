@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2020",
+    "target": "ESNext",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "declaration": true,
@@ -16,6 +16,8 @@
     "dist",
     "**/*.spec.ts",
     "vitest.config.ts",
-    "vitest.setup.ts"
+    "vitest.setup.ts",
+    ".baserowrc",
+    "__generated__"
   ]
 }

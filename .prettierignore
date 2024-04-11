@@ -2,3 +2,4 @@ tsconfig.json
 package.json
 pnpm-lock.yaml
 README.md
+__generated__

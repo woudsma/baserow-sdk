@@ -34,6 +34,28 @@ export type UpdateRowOptions = {
   user_field_names?: boolean;
 };
 
+export type FieldDefinition = {
+  id: number;
+  table_id: number;
+  name: string;
+  order: number;
+  type: string;
+  primary: boolean;
+  read_only: boolean;
+  array_formula_type?: string;
+  formula_type?: string;
+  link_row_table_id?: number;
+};
+
+export type ListFieldsResponse = Array<FieldDefinition>;
+
+export type ListDatabaseTablesResponse = Array<{
+  id: number;
+  name: string;
+  order: number;
+  database_id: number;
+}>;
+
 export class BaserowSdk {
   constructor(databaseToken: string) {
     c.defaults.headers.common["Authorization"] = `Token ${databaseToken}`;
@@ -89,6 +111,13 @@ export class BaserowSdk {
       `/database/rows/table/${tableId}/${rowId}/`,
       input,
       { params: options },
+    );
+    return data;
+  }
+
+  public async listFields(tableId: number): Promise<ListFieldsResponse> {
+    const { data } = await c.get<ListFieldsResponse>(
+      `/database/fields/table/${tableId}/`,
     );
     return data;
   }
