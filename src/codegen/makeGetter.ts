@@ -41,32 +41,8 @@ function getReturnType(field: FieldDefinition, tables: Table[]): string {
   return makeFieldType(field);
 }
 
-function getRawType(field: FieldDefinition): string {
-  if (field.type === "link_row") {
-    return `{ "id": number, "value": string }[]`;
-  }
-
-  if (field.type === "single_select") {
-    if (!field.select_options) {
-      throw new Error(
-        `Field ${field.name} is a single_select but has no select_options`,
-      );
-    }
-
-    const options = field.select_options
-      .map((option) => {
-        return `{ id: ${option.id}, value: "${option.value}", color: "${option.color}" }`;
-      })
-      .join(" | ");
-
-    return `(${options})`;
-  }
-
-  return makeFieldType(field);
-}
-
 function getBody(field: FieldDefinition, tables: Table[]): string {
-  const rawType = getRawType(field);
+  const rawType = makeFieldType(field);
   const query = `this.getField<${rawType}>("${field.name}")`;
 
   if (field.type === "number") {
