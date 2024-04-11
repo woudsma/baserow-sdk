@@ -99,5 +99,5 @@ export function makeGetter(
   const rt = getReturnType(field, tables);
   const bd = getBody(field, tables);
 
-  return `public ${fn}(): ${rt} { ${bd} }`;
+  return `\tpublic ${fn}(): ${rt} { ${bd} }`;
 }
