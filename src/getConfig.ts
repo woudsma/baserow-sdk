@@ -9,7 +9,7 @@ const schema = z.object({
   config: z.string(),
 });
 
-type BaserowConfig = z.infer<typeof schema>;
+export type BaserowConfig = z.infer<typeof schema>;
 
 export function getConfig(): BaserowConfig {
   return schema.parse(rc("baserow"));

@@ -1,24 +1,19 @@
 import { BaserowSdk } from "./index.js";
 
 export type RowType = Record<string, unknown> & { id: number; order: string };
-
+export type RowOptions<T> = {
+  tableId: number;
+  rowId: number;
+  row: T;
+  sdk: BaserowSdk;
+};
 export abstract class Row<T extends RowType> {
   protected tableId: number;
   protected rowId: number;
   protected row: T;
   protected sdk: BaserowSdk;
 
-  constructor({
-    tableId,
-    rowId,
-    row,
-    sdk,
-  }: {
-    tableId: number;
-    rowId: number;
-    row: T;
-    sdk: BaserowSdk;
-  }) {
+  constructor({ tableId, rowId, row, sdk }: RowOptions<T>) {
     this.tableId = tableId;
     this.rowId = rowId;
     this.row = row;
