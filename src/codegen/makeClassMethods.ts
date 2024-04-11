@@ -13,6 +13,7 @@ function makeGetter(
         return parseFloat(this.getField<${t}>("${field.name}").toString());
     }`;
   }
+
   if (field.type === "link_row") {
     if (!field.link_row_table_id) {
       throw new Error("link_row_table_id is missing");
@@ -25,6 +26,12 @@ function makeGetter(
       return Promise.all(this.getField<{ "id": number, "value": string }[]>("${field.name}").map((r) => {
         return this.repository.${toCamelCase(`get one ${foreignTable.name}`)}(r.id);
       }));    
+    }`;
+  }
+
+  if (field.type === "date" || field.formula_type === "date") {
+    return `public ${toCamelCase(`get ${field.name}`)}(): Date {
+        return new Date(this.getField<${t}>("${field.name}"));
     }`;
   }
 
