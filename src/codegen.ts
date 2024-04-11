@@ -13,6 +13,16 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 export default async function main(): Promise<void> {
   const config = getConfig();
 
+  if (
+    !config.databaseToken ||
+    !config.config ||
+    !config.outDir ||
+    !config.tables
+  ) {
+    console.error("Missing required configuration options");
+    return;
+  }
+
   console.dir(config);
 
   const outDir = path.join(path.dirname(config.config), config.outDir);

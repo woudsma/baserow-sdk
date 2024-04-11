@@ -14,6 +14,9 @@ export abstract class Factory {
 
   constructor() {
     this.config = getConfig();
+    if (!this.config.databaseToken) {
+      throw new Error("Missing database token in configuration");
+    }
     this.sdk = new BaserowSdk(this.config.databaseToken);
   }
 
