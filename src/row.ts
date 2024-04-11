@@ -2,21 +2,21 @@ import { Factory } from "./factory.js";
 import { BaserowSdk } from "./index.js";
 
 export type RowType = Record<string, unknown> & { id: number; order: string };
-export type RowOptions<T> = {
+export type RowOptions<T extends RowType, R extends Factory> = {
   tableId: number;
   rowId: number;
   row: T;
   sdk: BaserowSdk;
-  repository: Factory;
+  repository: R;
 };
-export abstract class Row<T extends RowType> {
+export abstract class Row<T extends RowType, R extends Factory> {
   protected tableId: number;
   protected rowId: number;
   protected row: T;
   protected sdk: BaserowSdk;
   protected repository: Factory;
 
-  constructor({ tableId, rowId, row, sdk, repository }: RowOptions<T>) {
+  constructor({ tableId, rowId, row, sdk, repository }: RowOptions<T, R>) {
     this.tableId = tableId;
     this.rowId = rowId;
     this.row = row;
