@@ -2,7 +2,7 @@ import { ListFieldsResponse } from "../index.js";
 import { makeGetter } from "./makeGetter.js";
 import { makeSetter } from "./makeSetter.js";
 
-export default function makeClassMethods(
+export default function makeModelMethods(
   tableId: number,
   tables: { id: number; name: string; fields: ListFieldsResponse }[],
 ): string {

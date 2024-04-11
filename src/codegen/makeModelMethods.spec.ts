@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
-import makeClassMethods from "./makeClassMethods";
-import f from "../test/fixtures/fieldDefinition";
+import makeModelMethods from "./makeModelMethods";
+import f from "../test/fixtures/fieldDefinition.js";
 import { ListFieldsResponse } from "../index.js";
 
 function run(fields: ListFieldsResponse = []): string {
-  return makeClassMethods(1, [{ id: 1, name: "the_table_name", fields }]);
+  return makeModelMethods(1, [{ id: 1, name: "the_table_name", fields }]);
 }
 
 describe("makeClassMethods", () => {
@@ -134,7 +134,7 @@ describe("makeClassMethods", () => {
 
   it("accepts id array for link_row setters", () => {
     expect(
-      makeClassMethods(1, [
+      makeModelMethods(1, [
         {
           id: 1,
           name: "the_table_name",
@@ -147,7 +147,7 @@ describe("makeClassMethods", () => {
 
   it("uses repository to get linked row objects", () => {
     expect(
-      makeClassMethods(1, [
+      makeModelMethods(1, [
         {
           id: 1,
           name: "the_table_name",
@@ -160,7 +160,7 @@ describe("makeClassMethods", () => {
 
   it("properly set link row getter return type", () => {
     expect(
-      makeClassMethods(1, [
+      makeModelMethods(1, [
         {
           id: 1,
           name: "the_table_name",

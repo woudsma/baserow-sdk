@@ -1,9 +1,10 @@
 import { BaserowSdk, ListFieldsResponse } from "./index.js";
 import fs from "fs";
 import makeType from "./codegen/makeType.js";
-import makeClassMethods from "./codegen/makeClassMethods.js";
+import makeModelMethods from "./codegen/makeModelMethods.js";
 import path from "path";
 import { getConfig } from "./getConfig.js";
+import makeRepositoryMethods from "./codegen/makeRepositoryMethods.js";
 
 export type Table = { id: number; name: string; fields: ListFieldsResponse };
 
@@ -67,7 +68,7 @@ export class ${tableName}Row extends Row<${tableName}RowType> {
     super(options);
     this.repository = options.repository;
   }
-${makeClassMethods(table.id, tables)}
+${makeModelMethods(table.id, tables)}
 }`;
 
     fs.writeFileSync(`${outDir}/${tableName}.ts`, typeDef);
@@ -81,21 +82,9 @@ ${Object.keys(config.tables)
       `import { ${tableName}Row, ${tableName}RowType } from './${tableName}.js';`,
   )
   .join("\n")}
+
 export class Repository extends Factory {
-    ${Object.keys(config.tables)
-      .map(
-        (tableName) =>
-          `public async getMany${tableName}(options: ListRowsOptions = {}): Promise<${tableName}Row[]> {
-        const {results} = await this.sdk.listRows<${tableName}RowType>(${config.tables[tableName]}, options);
-        return results.map((row) => new ${tableName}Row({tableId: ${config.tables[tableName]}, rowId: row.id, row, sdk: this.sdk, repository: this}));
-    }
-    public async getOne${tableName}(id: number, options: GetRowOptions = {}): Promise<${tableName}Row> {
-        const row = await this.sdk.getRow<${tableName}RowType>(${config.tables[tableName]}, id, options);
-        return new ${tableName}Row({tableId: ${config.tables[tableName]}, rowId: row.id, row, sdk: this.sdk, repository: this});
-    }
-    `,
-      )
-      .join("\n")}
+${makeRepositoryMethods(tables)}
 }`;
 
   fs.writeFileSync(`${outDir}/Repository.ts`, factoryCode);
