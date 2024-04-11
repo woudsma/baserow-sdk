@@ -7,8 +7,9 @@ interface RowClass<T extends RowType, R extends Factory> {
 }
 
 export abstract class Factory {
+  public readonly config: BaserowConfig;
+
   protected sdk: BaserowSdk;
-  protected config: BaserowConfig;
   protected classes: Map<number, RowClass<RowType, Factory>> = new Map();
 
   constructor() {
