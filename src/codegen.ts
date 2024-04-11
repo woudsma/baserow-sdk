@@ -20,7 +20,6 @@ export default async function main(): Promise<void> {
     })
     .parse(raw);
 
-  console.log("Hello from codegen.ts");
   console.dir(config);
 
   const outDir = path.join(path.dirname(config.config), config.outDir);
@@ -55,12 +54,12 @@ export default async function main(): Promise<void> {
     //TODO: this may not be correct for all generated files
     const typeDef = `export type ${tableName}RowType = ${makeType(fields)}
 
-import { Row } from "${__dirname}/row.ts";
-import { Repository } from "./Repository.ts";
-import { BaserowSdk } from "${__dirname}/index.ts";
+import { Row } from "${__dirname}/row.js";
+import { Repository } from "./Repository.js";
+import { BaserowSdk } from "${__dirname}/index.js";
 ${foreignTables
   .map((t) => {
-    return `import { ${t?.name}Row } from "./${t?.name}.ts";`;
+    return `import { ${t?.name}Row } from "./${t?.name}.js";`;
   })
   .join("\n")}
 
@@ -82,12 +81,12 @@ export class ${tableName}Row extends Row<${tableName}RowType> {
     fs.writeFileSync(`${outDir}/${tableName}.ts`, typeDef);
   });
 
-  const factoryCode = `import { Factory } from '${__dirname}/factory.ts'
-import { ListRowsOptions, GetRowOptions } from '${__dirname}/index.ts'
+  const factoryCode = `import { Factory } from '${__dirname}/factory.js'
+import { ListRowsOptions, GetRowOptions } from '${__dirname}/index.js'
 ${Object.keys(config.tables)
   .map(
     (tableName) =>
-      `import { ${tableName}Row, ${tableName}RowType } from './${tableName}.ts';`,
+      `import { ${tableName}Row, ${tableName}RowType } from './${tableName}.js';`,
   )
   .join("\n")}
 export class Repository extends Factory {
