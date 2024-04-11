@@ -31,7 +31,7 @@ export default async function main(): Promise<void> {
   );
 
   tables.map((table) => {
-    console.log(table);
+    console.dir(table, { depth: null });
     const tableName = table.name;
     const fields = table.fields;
     const foreignTables = fields

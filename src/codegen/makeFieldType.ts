@@ -13,5 +13,15 @@ export function makeFieldType(field: FieldDefinition): string {
         return mapPrimitive(field.formula_type);
     }
   }
+  if (field.type === "single_select") {
+    if (!field.select_options) {
+      throw new Error(
+        `Field ${field.name} is a single_select but has no select_options`,
+      );
+    }
+    return field.select_options
+      ?.map((option) => `"${option.value}"`)
+      .join(" | ");
+  }
   return mapPrimitive(field.type);
 }
