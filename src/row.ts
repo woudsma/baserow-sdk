@@ -1,3 +1,4 @@
+import { Factory } from "./factory.js";
 import { BaserowSdk } from "./index.js";
 
 export type RowType = Record<string, unknown> & { id: number; order: string };
@@ -6,18 +7,21 @@ export type RowOptions<T> = {
   rowId: number;
   row: T;
   sdk: BaserowSdk;
+  repository: Factory;
 };
 export abstract class Row<T extends RowType> {
   protected tableId: number;
   protected rowId: number;
   protected row: T;
   protected sdk: BaserowSdk;
+  protected repository: Factory;
 
-  constructor({ tableId, rowId, row, sdk }: RowOptions<T>) {
+  constructor({ tableId, rowId, row, sdk, repository }: RowOptions<T>) {
     this.tableId = tableId;
     this.rowId = rowId;
     this.row = row;
     this.sdk = sdk;
+    this.repository = repository;
   }
 
   public getRow(): T {
