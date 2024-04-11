@@ -1,9 +1,11 @@
-import { BaserowSdk } from "./index.js";
+import { BaserowSdk, ListFieldsResponse } from "./index.js";
 import fs from "fs";
 import makeType from "./codegen/makeType.js";
 import makeClassMethods from "./codegen/makeClassMethods.js";
 import path from "path";
 import { getConfig } from "./getConfig.js";
+
+export type Table = { id: number; name: string; fields: ListFieldsResponse };
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
@@ -20,7 +22,7 @@ export default async function main(): Promise<void> {
 
   const sdk = new BaserowSdk(String(config.databaseToken));
 
-  const tables = await Promise.all(
+  const tables: Table[] = await Promise.all(
     Object.entries(config.tables).map(async ([name, id]) => {
       return {
         name,
