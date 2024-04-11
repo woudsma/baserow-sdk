@@ -64,7 +64,7 @@ ${foreignTables
   .join("\n")}
 
 export class ${tableName}Row extends Row<${tableName}RowType> {
-  private repository: Repository;
+  protected repository: Repository;
   constructor(options: {
     tableId: number;
     rowId: number;
