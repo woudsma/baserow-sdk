@@ -20,6 +20,7 @@ export default async function main(): Promise<void> {
     !config.tables
   ) {
     console.error("Missing required configuration options");
+    console.log(config);
     return;
   }
 
