@@ -69,6 +69,7 @@ describe("makeGetter", () => {
       },
       `<({ id: 1, value: "the_option_name", color: "red" } | { id: 2, value: "the_option_name_2", color: "blue" })>`,
     ],
+    [{ type: "number" }, `: number {`],
   ])("%s => `%s`", (field, expected) => {
     expect(run(field)).toContain(expected);
   });

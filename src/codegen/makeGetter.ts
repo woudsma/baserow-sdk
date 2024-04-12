@@ -38,6 +38,10 @@ function getReturnType(field: FieldDefinition, tables: Table[]): string {
       .join(" | ");
   }
 
+  if (field.type === "number") {
+    return "number";
+  }
+
   return makeFieldType(field);
 }
 
