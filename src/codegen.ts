@@ -10,7 +10,11 @@ export type Table = { id: number; name: string; fields: ListFieldsResponse };
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-export default async function main(): Promise<void> {
+export default async function main({
+  isDev = false,
+}: {
+  isDev: boolean;
+}): Promise<void> {
   const config = getConfig();
 
   if (
@@ -55,12 +59,13 @@ export default async function main(): Promise<void> {
       )
       .filter((t) => !!t);
 
-    //TODO: this may not be correct for all generated files
+    const modelImports = isDev
+      ? `import { BaserowSdk, Row } from '${__dirname}/index.js'`
+      : "import { BaserowSdk, Row } from 'baserow-sdk'";
     const typeDef = `export type ${tableName}RowType = ${makeType(fields)}
 
-import { Row } from "${__dirname}/row.js";
+${modelImports}
 import { Repository } from "./Repository.js";
-import { BaserowSdk } from "${__dirname}/index.js";
 ${foreignTables
   .map((t) => {
     return `import { ${t?.name}Row } from "./${t?.name}.js";`;
@@ -85,8 +90,16 @@ ${makeModelMethods(table.id, tables)}
     fs.writeFileSync(`${outDir}/${tableName}.ts`, typeDef);
   });
 
-  const factoryCode = `import { Factory } from '${__dirname}/factory.js'
-import { ListRowsOptions, GetRowOptions } from '${__dirname}/index.js'
+  const factoryImport = isDev
+    ? `import { Factory } from '${__dirname}/factory.js'`
+    : "import { Factory } from 'baserow-sdk'";
+
+  const indexImports = isDev
+    ? `import { ListRowsOptions, GetRowOptions } from '${__dirname}/index.js'`
+    : `import { ListRowsOptions, GetRowOptions } from 'baserow-sdk'`;
+
+  const factoryCode = `${factoryImport}
+${indexImports}
 ${Object.keys(config.tables)
   .map(
     (tableName) =>
