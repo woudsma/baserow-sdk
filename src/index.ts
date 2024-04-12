@@ -1,5 +1,7 @@
 import c from "./client.js";
 
+export * from "./row.js";
+
 export type AddRowOptions = {
   user_field_names?: boolean;
   before?: number;

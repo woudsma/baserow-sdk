@@ -2,4 +2,6 @@
 
 import main from "./dist/src/codegen.js";
 
-await main();
+const isDev = process.argv.includes("-d");
+
+await main({ isDev });
