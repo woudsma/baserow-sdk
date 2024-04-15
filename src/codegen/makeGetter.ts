@@ -38,7 +38,7 @@ function getReturnType(field: FieldDefinition, tables: Table[]): string {
       .join(" | ");
   }
 
-  if (field.type === "number") {
+  if (field.type === "number" || field.formula_type === "number") {
     return "number";
   }
 
@@ -49,7 +49,7 @@ function getBody(field: FieldDefinition, tables: Table[]): string {
   const rawType = makeFieldType(field);
   const query = `this.getField<${rawType}>("${field.name}")`;
 
-  if (field.type === "number") {
+  if (field.type === "number" || field.formula_type === "number") {
     return `return parseFloat(${query}.toString());`;
   }
 
