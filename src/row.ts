@@ -52,17 +52,16 @@ export abstract class Row<
 
   protected getLinkedRows<T extends Row, R extends RowType, F extends Factory>(
     tableId: number,
-    fieldId: number,
+    field: string,
     defaultClass: RowClass<R, F>,
   ): Promise<T[]> {
     return this.repository.getMany(tableId, defaultClass, {
-      user_field_names: false,
       filters: {
         filter_type: "AND",
         filters: [
           {
             type: "link_row_has",
-            field: fieldId,
+            field,
             value: this.getId().toString(),
           },
         ],

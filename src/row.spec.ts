@@ -4,7 +4,7 @@ import { describe, it, expect, vi } from "vitest";
 
 class MyRow extends Row {
   public async doSomething(): Promise<Row<RowType, Factory>[]> {
-    return this.getLinkedRows(1, 2, MyRow);
+    return this.getLinkedRows(1, "the_field", MyRow);
   }
 }
 
@@ -31,7 +31,7 @@ describe("Row", () => {
         filters: expect.objectContaining({
           filters: expect.arrayContaining([
             expect.objectContaining({
-              field: 2,
+              field: "the_field",
             }),
           ]),
         }),
