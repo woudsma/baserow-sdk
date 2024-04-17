@@ -1,6 +1,6 @@
 import { Table } from "../codegen.js";
 import { FieldDefinition, ListFieldsResponse } from "../index.js";
-import { makeFieldType } from "./makeFieldType.js";
+import { getRawType } from "./getRawType.js";
 import { toCamelCase } from "./toCamelCase.js";
 
 function getForeignTable(
@@ -42,11 +42,11 @@ function getReturnType(field: FieldDefinition, tables: Table[]): string {
     return "number";
   }
 
-  return makeFieldType(field);
+  return getRawType(field);
 }
 
 function getBody(field: FieldDefinition, tables: Table[]): string {
-  const rawType = makeFieldType(field);
+  const rawType = getRawType(field);
   const query = `this.getField<${rawType}>("${field.name}")`;
 
   if (field.type === "number" || field.formula_type === "number") {

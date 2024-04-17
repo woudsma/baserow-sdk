@@ -19,7 +19,8 @@
     "build": "rm -rf ./dist && tsc",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "checkTs": "tsc --noEmit"
+    "checkTs": "tsc --noEmit",
+    "codegen:dev": "pnpm build && ./baserow.js -d > out.txt"
   },
   "keywords": [],
   "author": "",

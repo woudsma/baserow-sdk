@@ -75,7 +75,7 @@ describe("makeType", () => {
           array_formula_type: "text",
         }),
       ]),
-    ).toContain("(string)[]");
+    ).toContain("FieldValue<string>[]");
   });
 
   it("handles formula type array number", () => {
@@ -87,7 +87,7 @@ describe("makeType", () => {
           array_formula_type: "number",
         }),
       ]),
-    ).toContain("(number | string)[]");
+    ).toContain("FieldValue<number | string>[]");
   });
 
   it("handles formula type array boolean", () => {
@@ -99,7 +99,7 @@ describe("makeType", () => {
           array_formula_type: "boolean",
         }),
       ]),
-    ).toContain("(boolean)[]");
+    ).toContain("FieldValue<boolean>[]");
   });
 
   it("quotes field names", () => {
@@ -187,7 +187,7 @@ describe("makeType", () => {
           array_formula_type: "text",
         }),
       ]),
-    ).toContain("(string)[]");
+    ).toContain("FieldValue<string>[]");
   });
 
   it("handles rollup type array number", () => {
@@ -199,7 +199,7 @@ describe("makeType", () => {
           array_formula_type: "number",
         }),
       ]),
-    ).toContain("(number | string)[]");
+    ).toContain("FieldValue<number | string>[]");
   });
 
   it("handles link row", () => {
@@ -221,7 +221,7 @@ describe("makeType", () => {
           array_formula_type: "number",
         }),
       ]),
-    ).toContain("(number | string)[]");
+    ).toContain("FieldValue<number | string>[]");
   });
 
   it("handles rollup type date", () => {

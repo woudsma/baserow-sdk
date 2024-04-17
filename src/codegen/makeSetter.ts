@@ -1,5 +1,5 @@
 import { FieldDefinition } from "../index.js";
-import { makeFieldType } from "./makeFieldType.js";
+import { getRawType } from "./getRawType.js";
 import { toCamelCase } from "./toCamelCase.js";
 
 function getInputType(field: FieldDefinition): string {
@@ -7,7 +7,7 @@ function getInputType(field: FieldDefinition): string {
     return "number[]";
   }
 
-  return makeFieldType(field);
+  return getRawType(field);
 }
 
 export function makeSetter(field: FieldDefinition): string {

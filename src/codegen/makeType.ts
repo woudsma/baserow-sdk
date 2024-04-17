@@ -1,5 +1,5 @@
 import { ListFieldsResponse } from "../index.js";
-import { makeFieldType } from "./makeFieldType.js";
+import { getRawType } from "./getRawType.js";
 
 export default function makeType(fields: ListFieldsResponse): string {
   let typeDef = `{\n`;
@@ -8,7 +8,7 @@ export default function makeType(fields: ListFieldsResponse): string {
   typeDef += '  "order": string;\n';
 
   fields.forEach((field) => {
-    typeDef += `  "${field.name}": ${makeFieldType(field)};\n`;
+    typeDef += `  "${field.name}": ${getRawType(field)};\n`;
   });
 
   typeDef += `}`;
