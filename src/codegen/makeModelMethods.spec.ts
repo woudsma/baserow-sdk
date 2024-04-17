@@ -145,19 +145,6 @@ describe("makeClassMethods", () => {
     ).toContain("value: number[]");
   });
 
-  it("uses repository to get linked row objects", () => {
-    expect(
-      makeModelMethods(1, [
-        {
-          id: 1,
-          name: "the_table_name",
-          fields: [f({ type: "link_row", link_row_table_id: 2 })],
-        },
-        { id: 2, name: "the_foreign_table_name", fields: [] },
-      ]),
-    ).toContain("this.repository.getOneTheForeignTableName");
-  });
-
   it("properly set link row getter return type", () => {
     expect(
       makeModelMethods(1, [

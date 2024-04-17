@@ -4,7 +4,13 @@ import { makeGetter } from "./makeGetter";
 import { FieldDefinition } from "..";
 
 function run(field: Partial<FieldDefinition> = {}): string {
-  return makeGetter(f(field), []);
+  return makeGetter(f(field), [
+    {
+      id: 1,
+      name: "table_name",
+      fields: [],
+    },
+  ]);
 }
 
 describe("makeGetter", () => {
@@ -83,6 +89,14 @@ describe("makeGetter", () => {
         formula_type: "number",
       },
       `parseFloat(`,
+    ],
+    [
+      {
+        type: "link_row",
+        link_row_table_id: 1,
+        link_row_related_field_id: 2,
+      },
+      "this.getLinkedRows",
     ],
   ])("%s => `%s`", (field, expected) => {
     expect(run(field)).toContain(expected);
