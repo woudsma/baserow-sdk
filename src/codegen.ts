@@ -60,8 +60,8 @@ export default async function main({
       .filter((t) => !!t);
 
     const modelImports = isDev
-      ? `import { BaserowSdk, Row } from '${__dirname}/index.js'`
-      : "import { BaserowSdk, Row } from 'baserow-sdk'";
+      ? `import { BaserowSdk, Row, FieldValue } from '${__dirname}/index.js'`
+      : "import { BaserowSdk, Row, FieldValue } from 'baserow-sdk'";
     const typeDef = `export type ${tableName}RowType = ${makeType(fields)}
 
 ${modelImports}

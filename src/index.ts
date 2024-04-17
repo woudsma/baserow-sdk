@@ -2,6 +2,7 @@ import c from "./client.js";
 
 export * from "./row.js";
 export * from "./factory.js";
+export * from "./types.js";
 
 export type AddRowOptions = {
   user_field_names?: boolean;
