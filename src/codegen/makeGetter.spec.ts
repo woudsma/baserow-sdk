@@ -8,7 +8,17 @@ function run(field: Partial<FieldDefinition> = {}): string {
     {
       id: 1,
       name: "table_name",
-      fields: [],
+      fields: [
+        {
+          id: 2,
+          name: "field_name",
+          table_id: 0,
+          order: 0,
+          type: "",
+          primary: false,
+          read_only: false,
+        },
+      ],
     },
   ]);
 }
@@ -97,6 +107,14 @@ describe("makeGetter", () => {
         link_row_related_field_id: 2,
       },
       "this.getLinkedRows",
+    ],
+    [
+      {
+        type: "link_row",
+        link_row_table_id: 1,
+        link_row_related_field_id: 2,
+      },
+      `"field_name"`,
     ],
   ])("%s => `%s`", (field, expected) => {
     expect(run(field)).toContain(expected);

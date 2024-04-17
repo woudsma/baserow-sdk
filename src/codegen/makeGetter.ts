@@ -3,10 +3,7 @@ import { FieldDefinition, ListFieldsResponse } from "../index.js";
 import { getRawType } from "./getRawType.js";
 import { toCamelCase } from "./toCamelCase.js";
 
-function getForeignTable(
-  field: FieldDefinition,
-  tables: Table[],
-): { id: number; name: string } {
+function getForeignTable(field: FieldDefinition, tables: Table[]): Table {
   if (!field.link_row_table_id) {
     throw new Error("link_row_table_id is missing");
   }
@@ -59,7 +56,12 @@ function getBody(field: FieldDefinition, tables: Table[]): string {
 
   if (field.type === "link_row") {
     const foreignTable = getForeignTable(field, tables);
-    return `return this.getLinkedRows(${field.link_row_table_id}, ${field.link_row_related_field_id}, ${foreignTable.name}Row);`;
+    const tableId = field.link_row_table_id;
+    const fieldId = field.link_row_related_field_id;
+    const foreignField = foreignTable.fields.find((f) => f.id === fieldId);
+    const fieldName = foreignField?.name;
+    const className = `${foreignTable.name}Row`;
+    return `return this.getLinkedRows(${tableId}, "${fieldName}", ${className});`;
   }
 
   if (field.type === "date" || field.formula_type === "date") {
