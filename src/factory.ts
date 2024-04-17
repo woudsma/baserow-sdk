@@ -1,10 +1,6 @@
 import { BaserowConfig, getConfig } from "./getConfig.js";
-import { BaserowSdk } from "./index.js";
-import { Row, RowOptions, RowType } from "./row.js";
-
-interface RowClass<T extends RowType, R extends Factory> {
-  new (options: RowOptions<T, R>): Row<T, R>;
-}
+import { BaserowSdk, RowClass } from "./index.js";
+import { Row, RowType } from "./row.js";
 
 export abstract class Factory {
   public readonly config: BaserowConfig;
@@ -31,5 +27,24 @@ export abstract class Factory {
     tableId: number,
   ): RowClass<T, R> | undefined {
     return this.classes.get(tableId) as RowClass<T, R> | undefined;
+  }
+
+  public async getMany<T extends Row, R extends RowType, F extends Factory>(
+    tableId: number,
+    defaultClass: RowClass<R, F>,
+    options: Record<string, unknown> = {},
+  ): Promise<T[]> {
+    const { results } = await this.sdk.listRows<R>(tableId, options);
+    const rowClass = this.getRowClass(tableId) || defaultClass;
+    return results.map(
+      (row) =>
+        new rowClass({
+          tableId,
+          rowId: row.id,
+          row,
+          sdk: this.sdk,
+          repository: this as unknown as F,
+        }),
+    ) as T[];
   }
 }

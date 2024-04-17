@@ -84,6 +84,14 @@ describe("makeGetter", () => {
       },
       `parseFloat(`,
     ],
+    [
+      {
+        type: "link_row",
+        link_row_table_id: 1,
+        link_row_related_field_id: 2,
+      },
+      "this.repository.getMany<",
+    ],
   ])("%s => `%s`", (field, expected) => {
     expect(run(field)).toContain(expected);
   });

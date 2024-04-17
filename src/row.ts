@@ -1,5 +1,5 @@
 import { Factory } from "./factory.js";
-import { BaserowSdk } from "./index.js";
+import { BaserowSdk, RowClass } from "./index.js";
 
 export type RowType = Record<string, unknown> & { id: number; order: string };
 export type RowOptions<T extends RowType, R extends Factory> = {
@@ -9,7 +9,10 @@ export type RowOptions<T extends RowType, R extends Factory> = {
   sdk: BaserowSdk;
   repository: R;
 };
-export abstract class Row<T extends RowType, R extends Factory> {
+export abstract class Row<
+  T extends RowType = RowType,
+  R extends Factory = Factory,
+> {
   protected tableId: number;
   protected rowId: number;
   protected row: T;
@@ -44,6 +47,26 @@ export abstract class Row<T extends RowType, R extends Factory> {
     (this.row as RowType)[field] = value;
     await this.sdk.updateRow(this.tableId, this.rowId, {
       [field]: value,
+    });
+  }
+
+  protected getLinkedRows<T extends Row, R extends RowType, F extends Factory>(
+    tableId: number,
+    field: string | number,
+    defaultClass: RowClass<R, F>,
+  ): Promise<T[]> {
+    return this.repository.getMany(tableId, defaultClass, {
+      filters: {
+        filter_type: "AND",
+        filters: [
+          {
+            type: "link_row_has",
+            field: field.toString(),
+            value: this.getId().toString(),
+          },
+        ],
+        groups: [],
+      },
     });
   }
 }
