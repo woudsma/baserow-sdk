@@ -4,3 +4,4 @@ scripts/
 .baserowrc
 __generated__/
 out.txt
+pnpm-lock.yaml
