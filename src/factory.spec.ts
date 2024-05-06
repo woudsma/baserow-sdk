@@ -10,12 +10,14 @@ describe("Factory", () => {
     vi.mocked(client.get)
       .mockResolvedValue({
         data: {
-          results: [],
+          results: [{}],
+          next: null,
         },
       })
       .mockResolvedValueOnce({
         data: {
           results: [{}],
+          next: "the_next_url",
         },
       });
   });
