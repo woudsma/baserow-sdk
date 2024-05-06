@@ -9,10 +9,7 @@ export type RowOptions<T extends RowType, R extends Factory> = {
   sdk: BaserowSdk;
   repository: R;
 };
-export abstract class Row<
-  T extends RowType = RowType,
-  R extends Factory = Factory,
-> {
+export class Row<T extends RowType = RowType, R extends Factory = Factory> {
   protected tableId: number;
   protected rowId: number;
   protected row: T;
