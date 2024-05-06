@@ -34,16 +34,16 @@ export class Factory {
     options: Record<string, unknown> & { page?: number } = {},
     accumulator: R[] = [],
   ): Promise<R[]> {
-    const { results, next } = await this.sdk.listRows<R>(tableId, options);
+    const { page = 1 } = options;
+    const { results, next } = await this.sdk.listRows<R>(tableId, {
+      ...options,
+      page,
+    });
+    accumulator.push(...results);
     if (!next) {
       return accumulator;
     }
-    accumulator.push(...results);
-    return this.getAll(
-      tableId,
-      { ...options, page: (options.page ?? 0) + 1 },
-      accumulator,
-    );
+    return this.getAll(tableId, { ...options, page: page + 1 }, accumulator);
   }
 
   private createRows<T extends Row, R extends RowType, F extends Factory>(
