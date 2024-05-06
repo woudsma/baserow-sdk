@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { Factory } from "./factory";
-import { Row } from "./row";
-import client from "./client";
+import { Factory } from "./factory.js";
+import { Row } from "./row.js";
+import client from "./client.js";
 
 const factory = new Factory();
 
