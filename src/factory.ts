@@ -34,8 +34,8 @@ export class Factory {
     options: Record<string, unknown> & { page?: number } = {},
     accumulator: R[] = [],
   ): Promise<R[]> {
-    const { results } = await this.sdk.listRows<R>(tableId, options);
-    if (results.length === 0) {
+    const { results, next } = await this.sdk.listRows<R>(tableId, options);
+    if (!next) {
       return accumulator;
     }
     accumulator.push(...results);
