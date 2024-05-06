@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "noEmit": false
+  },
+  "exclude": [
+    "./dist/**/*",
+    "**/*.spec.ts",
+    "vitest.config.ts",
+    "vitest.setup.ts",
+    ".baserowrc",
+    "__generated__"
+  ]
+}

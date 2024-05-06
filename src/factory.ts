@@ -2,7 +2,7 @@ import { BaserowConfig, getConfig } from "./getConfig.js";
 import { BaserowSdk, RowClass } from "./index.js";
 import { Row, RowType } from "./row.js";
 
-export abstract class Factory {
+export class Factory {
   public readonly config: BaserowConfig;
 
   protected sdk: BaserowSdk;
@@ -29,14 +29,30 @@ export abstract class Factory {
     return this.classes.get(tableId) as RowClass<T, R> | undefined;
   }
 
-  public async getMany<T extends Row, R extends RowType, F extends Factory>(
+  private async getAll<R extends RowType>(
+    tableId: number,
+    options: Record<string, unknown> & { page?: number } = {},
+    accumulator: R[] = [],
+  ): Promise<R[]> {
+    const { results } = await this.sdk.listRows<R>(tableId, options);
+    if (results.length === 0) {
+      return accumulator;
+    }
+    accumulator.push(...results);
+    return this.getAll(
+      tableId,
+      { ...options, page: (options.page ?? 0) + 1 },
+      accumulator,
+    );
+  }
+
+  private createRows<T extends Row, R extends RowType, F extends Factory>(
     tableId: number,
     defaultClass: RowClass<R, F>,
-    options: Record<string, unknown> = {},
-  ): Promise<T[]> {
-    const { results } = await this.sdk.listRows<R>(tableId, options);
+    rows: R[],
+  ): T[] {
     const rowClass = this.getRowClass(tableId) || defaultClass;
-    return results.map(
+    return rows.map(
       (row) =>
         new rowClass({
           tableId,
@@ -46,5 +62,18 @@ export abstract class Factory {
           repository: this as unknown as F,
         }),
     ) as T[];
+  }
+
+  public async getMany<T extends Row, R extends RowType, F extends Factory>(
+    tableId: number,
+    defaultClass: RowClass<R, F>,
+    options: Record<string, unknown> = {},
+  ): Promise<T[]> {
+    const shouldGetAll = options.page === undefined;
+    const results = shouldGetAll
+      ? await this.getAll<R>(tableId, options)
+      : (await this.sdk.listRows<R>(tableId, options)).results;
+
+    return this.createRows(tableId, defaultClass, results);
   }
 }
