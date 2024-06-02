@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import f from "../test/fixtures/fieldDefinition";
-import { makeGetter } from "./makeGetter";
-import { FieldDefinition } from "..";
+import f from "../test/fixtures/fieldDefinition.js";
+import { makeGetter } from "./makeGetter.js";
+import { FieldDefinition } from "../index.js";
 
 function run(field: Partial<FieldDefinition> = {}): string {
   return makeGetter(f(field), [
@@ -115,6 +115,12 @@ describe("makeGetter", () => {
         link_row_related_field_id: 2,
       },
       `"field_name"`,
+    ],
+    [
+      {
+        type: "number",
+      },
+      "parseFloat(String(",
     ],
   ])("%s => `%s`", (field, expected) => {
     expect(run(field)).toContain(expected);
