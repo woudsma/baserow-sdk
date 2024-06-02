@@ -47,7 +47,7 @@ function getBody(field: FieldDefinition, tables: Table[]): string {
   const query = `this.getField<${rawType}>("${field.name}")`;
 
   if (field.type === "number" || field.formula_type === "number") {
-    return `return parseFloat(${query}.toString());`;
+    return `return parseFloat(String(${query}));`;
   }
 
   if (field.type === "single_select") {
