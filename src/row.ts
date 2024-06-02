@@ -36,7 +36,7 @@ export class Row<T extends RowType = RowType, R extends Factory = Factory> {
     return parseFloat(this.row.order);
   }
 
-  protected getField<T>(field: string): T {
+  public getField<T>(field: string): T {
     return this.row[field] as T;
   }
 
