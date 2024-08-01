@@ -3,7 +3,10 @@ import z from "zod";
 
 const schema = z.object({
   url: z.string(),
-  tables: z.record(z.string(), z.number()),
+  tables: z.record(
+    z.string(),
+    z.preprocess((val) => parseFloat(val as string), z.number()),
+  ),
   databaseToken: z.string(),
   outDir: z.string(),
   config: z.string(),
