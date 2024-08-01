@@ -9,7 +9,7 @@ const schema = z.object({
   ),
   databaseToken: z.string(),
   outDir: z.string(),
-  config: z.string(),
+  config: z.optional(z.string()),
 });
 
 export type BaserowConfig = z.infer<typeof schema>;

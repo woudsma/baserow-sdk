@@ -17,20 +17,9 @@ export default async function main({
 }): Promise<void> {
   const config = getConfig();
 
-  if (
-    !config.databaseToken ||
-    !config.config ||
-    !config.outDir ||
-    !config.tables
-  ) {
-    console.error("Missing required configuration options");
-    console.log(config);
-    return;
-  }
-
-  console.dir(config);
-
-  const outDir = path.join(path.dirname(config.config), config.outDir);
+  const outDir = config.config
+    ? path.join(path.dirname(config.config), config.outDir)
+    : config.outDir;
 
   if (!fs.existsSync(outDir)) {
     fs.mkdirSync(outDir, { recursive: true });
