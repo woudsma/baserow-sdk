@@ -84,6 +84,9 @@ export class BaserowSdk {
     rowId: number,
     options: GetRowOptions = {},
   ): Promise<T> {
+    if (!Number.isFinite(rowId)) {
+      throw new Error("Invalid row ID");
+    }
     const { data } = await c.get<T>(
       `/database/rows/table/${tableId}/${rowId}/`,
       { params: options },

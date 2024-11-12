@@ -10,6 +10,11 @@ describe("BaserowSdk", () => {
     vi.mocked(client.post).mockResolvedValue({ data: { name: "test" } });
   });
 
+  it("validates row ID is a valid number", async () => {
+    await expect(sdk.getRow(1, NaN)).rejects.toThrow("Invalid row ID");
+    await expect(sdk.getRow(1, Infinity)).rejects.toThrow("Invalid row ID");
+  });
+
   it("returns the new row", async () => {
     const result = await sdk.addRow(1, { name: "test" });
 
