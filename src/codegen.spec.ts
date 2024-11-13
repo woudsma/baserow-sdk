@@ -34,7 +34,7 @@ describe("codegen", () => {
     await main({ isDev: true });
 
     expect(fs.writeFileSync).not.toBeCalledWith(
-      expect.anything(),
+      expect.stringContaining("Tasks"),
       expect.stringMatching(/import.*TasksRow.*from/),
     );
   });

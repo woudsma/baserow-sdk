@@ -32,8 +32,16 @@
 - Use Vitest for unit tests
 - Mock HTTP requests in tests
 - Test error cases and edge cases
-- Verify tests fail before fixing bugs
-- Test file location matters:
+- Follow test-driven development:
+  - Write tests that accurately capture the bug
+  - Verify tests fail before implementing fix
+  - Tests should be specific and match real issues
+  - Mock responses must match real data structures
+  - Test file location should match code organization:
+    - Integration tests go in the root test file
+    - Unit tests go next to implementation
+- Test location matters:
+  - Place tests close to implementation
   - codegen.ts handles table imports and circular dependencies
   - Individual codegen utilities handle specific generation tasks
 
