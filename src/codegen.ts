@@ -38,14 +38,12 @@ export default async function main({
   );
 
   tables.map((table) => {
-    console.dir(table, { depth: null });
+    if (isDev) console.dir(table, { depth: null });
     const tableName = table.name;
     const fields = table.fields;
     const foreignTables = fields
-      .filter((field) => !!field.link_row_table_id)
-      .map((field) =>
-        tables.find((table) => table.id === field.link_row_table_id),
-      )
+      .filter((f) => !!f.link_row_table_id && f.link_row_table_id !== table.id)
+      .map((f) => tables.find((table) => table.id === f.link_row_table_id))
       .filter((t) => !!t);
 
     const modelImports = isDev
@@ -101,6 +99,4 @@ ${makeRepositoryMethods(tables)}
 }`;
 
   fs.writeFileSync(`${outDir}/Repository.ts`, factoryCode);
-
-  // console.dir(tables);
 }

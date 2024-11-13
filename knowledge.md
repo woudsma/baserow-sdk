@@ -21,6 +21,8 @@
 ## Architecture
 
 - /src/codegen/: Code generation utilities
+  - codegen.ts: Handles table imports and overall code generation orchestration
+  - Individual utilities handle specific generation tasks (types, getters, etc)
 - /src/: Core SDK implementation
 - Factory pattern for managing row instances
 - Repository pattern for data access
@@ -30,6 +32,18 @@
 - Use Vitest for unit tests
 - Mock HTTP requests in tests
 - Test error cases and edge cases
+- Follow test-driven development:
+  - Write tests that accurately capture the bug
+  - Verify tests fail before implementing fix
+  - Tests should be specific and match real issues
+  - Mock responses must match real data structures
+  - Test file location should match code organization:
+    - Integration tests go in the root test file
+    - Unit tests go next to implementation
+- Test location matters:
+  - Place tests close to implementation
+  - codegen.ts handles table imports and circular dependencies
+  - Individual codegen utilities handle specific generation tasks
 
 ## Common Tasks
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import makeModelMethods from "./makeModelMethods";
+import makeModelMethods from "./makeModelMethods.js";
 import f from "../test/fixtures/fieldDefinition.js";
 import { ListFieldsResponse } from "../index.js";
 
