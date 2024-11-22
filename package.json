@@ -11,7 +11,8 @@
     "dist/**/*.js",
     "dist/**/*.d.ts",
     "src/*",
-    "tsconfig.build.json"
+    "tsconfig.build.json",
+    "tsconfig.json"
   ],
   "typings": "dist/src/index.d.ts",
   "scripts": {
