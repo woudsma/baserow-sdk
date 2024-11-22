@@ -10,7 +10,8 @@
   "files": [
     "dist/**/*.js",
     "dist/**/*.d.ts",
-    "src/*"
+    "src/*",
+    "tsconfig.build.json"
   ],
   "typings": "dist/src/index.d.ts",
   "scripts": {
