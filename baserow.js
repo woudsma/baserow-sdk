@@ -2,6 +2,6 @@
 
 import main from "./dist/src/codegen.js";
 
-const isDev = process.argv.includes("-d");
+const isDev = process.env.NODE_ENV === 'development';
 
 await main({ isDev });
