@@ -3,7 +3,7 @@ import { Interceptors } from "./interceptors.js";
 
 const client = axios.create();
 
-client.defaults.baseURL = "https://baserow.taskratchet.com/api/";
+client.defaults.baseURL = process.env.BASEROW_API_URL;
 client.defaults.headers.common["Content-Type"] = "application/json";
 
 const interceptors = new Interceptors();
