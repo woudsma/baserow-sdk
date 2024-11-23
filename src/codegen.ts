@@ -80,8 +80,8 @@ ${makeModelMethods(table.id, tables)}
   });
 
   const factoryImport = isDev
-    ? `import { Factory } from '${__dirname}/factory.js'`
-    : "import { Factory } from 'baserow-sdk'";
+    ? `import { AddRowOptions, Factory } from '${__dirname}/factory.js'`
+    : "import { AddRowOptions, Factory } from 'baserow-sdk'";
 
   const indexImports = isDev
     ? `import { ListRowsOptions, GetRowOptions } from '${__dirname}/index.js'`
