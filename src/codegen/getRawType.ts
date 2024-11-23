@@ -3,7 +3,7 @@ import { mapPrimitive } from "./mapPrimitive.js";
 
 export function getRawType(field: FieldDefinition): string {
   if (field.type === "link_row") {
-    return '{ "id": number, "value": string }[]';
+    return 'string[] | { "id": number, "value": string }[]';
   }
 
   if (["rollup", "formula", "lookup"].includes(field.type)) {
