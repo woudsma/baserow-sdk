@@ -15,5 +15,9 @@ const schema = z.object({
 export type BaserowConfig = z.infer<typeof schema>;
 
 export function getConfig(): BaserowConfig {
+  if (process.env.BASEROW_CONFIG) {
+    console.log(JSON.parse(process.env.BASEROW_CONFIG || "{}"));
+    return schema.parse(JSON.parse(process.env.BASEROW_CONFIG || "{}"));
+  }
   return schema.parse(rc("baserow", { tables: {} }));
 }
