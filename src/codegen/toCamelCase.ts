@@ -18,3 +18,7 @@ export function toCamelCase(str: string, upper: boolean = false): string {
 
   return _str;
 }
+
+function capitalizeFirstLetter(val: string) {
+    return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+}
