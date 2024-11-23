@@ -61,6 +61,7 @@ ${foreignTables
 
 export class ${tableName}Row extends Row<${tableName}RowType, Repository> {
   protected repository: Repository;
+  public row: ${tableName}RowType;
   constructor(options: {
     tableId: number;
     rowId: number;
@@ -70,6 +71,7 @@ export class ${tableName}Row extends Row<${tableName}RowType, Repository> {
   }) {
     super(options);
     this.repository = options.repository;
+    this.row = options.row;
   }
 ${makeModelMethods(table.id, tables)}
 }`;
