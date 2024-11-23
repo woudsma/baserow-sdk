@@ -9,10 +9,7 @@
   "type": "module",
   "files": [
     "dist/**/*.js",
-    "dist/**/*.d.ts",
-    "src/*",
-    "tsconfig.build.json",
-    "tsconfig.json"
+    "dist/**/*.d.ts"
   ],
   "typings": "dist/src/index.d.ts",
   "scripts": {
