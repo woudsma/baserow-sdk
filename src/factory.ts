@@ -5,7 +5,7 @@ import { Row, RowType } from "./row.js";
 export class Factory {
   public readonly config: BaserowConfig;
 
-  protected sdk: BaserowSdk;
+  public sdk: BaserowSdk;
   protected classes: Map<number, RowClass<RowType, Factory>> = new Map();
 
   constructor() {
