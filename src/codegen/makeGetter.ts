@@ -21,7 +21,7 @@ function getReturnType(field: FieldDefinition, tables: Table[]): string {
     return "Date";
   }
 
-  function lowerCaseFirstLetter(str) {
+  function lowerCaseFirstLetter(str: string) {
     return str[0].toLowerCase() + str.slice(1);
   }
 
