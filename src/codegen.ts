@@ -97,6 +97,9 @@ ${Object.keys(config.tables)
   .join("\n")}
 
 export class Repository extends Factory {
+  public tables = {
+    ${tables.map(table => table.name + ": " + table.id + ",")}
+  };
 ${makeRepositoryMethods(tables)}
 }`;
 
