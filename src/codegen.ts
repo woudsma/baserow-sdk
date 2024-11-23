@@ -15,7 +15,6 @@ export default async function main({
 }: {
   isDev: boolean;
 }): Promise<void> {
-  console.log(process.env);
   const config = getConfig();
 
   const outDir = config.config
