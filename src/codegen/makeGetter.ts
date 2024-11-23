@@ -21,9 +21,14 @@ function getReturnType(field: FieldDefinition, tables: Table[]): string {
     return "Date";
   }
 
+  function lowerCaseFirstLetter(str) {
+    return str[0].toLowerCase() + str.slice(1);
+  }
+
   if (field.type === "link_row") {
     const foreignTable = getForeignTable(field, tables);
-    return `Promise<${toCamelCase(foreignTable.name, true)}Row[]>`;
+    const tableName = toCamelCase(foreignTable.name, true);
+    return `Promise<${lowerCaseFirstLetter(tableName)}Row[]>`;
   }
 
   if (field.type === "single_select") {
