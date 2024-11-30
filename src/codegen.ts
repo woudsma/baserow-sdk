@@ -73,6 +73,10 @@ export class ${tableName}Row extends Row<${tableName}RowType, Repository> {
     this.repository = options.repository;
     this.row = options.row;
   }
+
+  public updateRow(value: Record<string, FieldValue>): Promise<void> {
+    return this.setFields(value);
+  }
 ${makeModelMethods(table.id, tables)}
 }`;
 

@@ -47,6 +47,13 @@ export class Row<T extends RowType = RowType, R extends Factory = Factory> {
     });
   }
 
+  protected async setFields(input: Record<string, unknown>): Promise<void> {
+    Object.keys(input).forEach((field) => {
+      (this.row as RowType)[field] = input[field];
+    });
+    await this.sdk.updateRow(this.tableId, this.rowId, input);
+  }
+
   protected getLinkedRows<T extends Row, R extends RowType, F extends Factory>(
     tableId: number,
     field: string,
