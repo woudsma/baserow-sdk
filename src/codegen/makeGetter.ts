@@ -28,7 +28,7 @@ function getReturnType(field: FieldDefinition, tables: Table[]): string {
   if (field.type === "link_row") {
     const foreignTable = getForeignTable(field, tables);
     const tableName = toCamelCase(foreignTable.name, true);
-    return `Promise<${lowerCaseFirstLetter(tableName)}Row[]>`;
+    return `Promise<${lowerCaseFirstLetter(foreignTable.name)}Row[]>`;
   }
 
   if (field.type === "single_select") {
